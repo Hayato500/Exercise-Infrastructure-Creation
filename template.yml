@@ -1,5 +1,6 @@
 # Exercise - Rollback
 AWSTemplateFormatVersion: 2010-09-09
+
 Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
@@ -9,6 +10,7 @@ Resources:
       KeyName: newkey
       ImageId: ami-08c40ec9ead489470
       InstanceType: t3.micro
+
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
