@@ -22,17 +22,17 @@ jobs:
             - image: amazon/aws-cli
         steps:
             - checkout
-        - run: yum install -y tar gzip
-        - run:
-            name: Fetch and save the old pipeline ID (bucket name) responsible for the last release.
-            command: |
-                aws cloudformation \
-                list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
-                --no-paginate --output text > ~/textfile.txt
-        - persist_to_workspace:
-            root: ~/
-            paths: 
-                - textfile.txt
+            - run: yum install -y tar gzip
+            - run:
+                name: Fetch and save the old pipeline ID (bucket name) responsible for the last release.
+                command: |
+                    aws cloudformation \
+                    list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
+                    --no-paginate --output text > ~/textfile.txt
+            - persist_to_workspace:
+                root: ~/
+                paths: 
+                    - textfile.txt
                 
     promote_to_production:
         # Executes the cloudfront.yml template that will modify the existing CloudFront Distribution, change its target from the old bucket to the new bucket - `mybucket-${CIRCLE_WORKFLOW_ID:0:7}`. 
