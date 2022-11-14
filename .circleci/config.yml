@@ -1,3 +1,4 @@
+version: 2.1
 # Executes the bucket.yml - Deploy an S3 bucket, and interface with that bucket to synchronize the files between local and the bucket.
 # Note that the `--parameter-overrides` let you specify a value that override parameter value in the bucket.yml template file.
 jobs:
@@ -69,9 +70,15 @@ jobs:
     
     
 workflows:
-    myworkflow:
+    my_workflow:
         jobs:
             - create_and_deploy_front_end
-            - get_last_deployment_id
-            - promote_to_production
-            - clean_up_old_front_end
+            - get_last_deployment_id:
+                - requires:
+                    - create_and_deploy_front_end
+            - promote_to_production:
+                - requires:
+                    - get_last_deployment_id
+            - clean_up_old_front_end:
+                - requires:
+                    - promote_to_production
