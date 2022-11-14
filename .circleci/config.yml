@@ -9,7 +9,6 @@ jobs:
         steps:
             - checkout
             - add_ssh_keys:
-                # You can get this ID in the section where you registered the SSH Key
                 fingerprints: ["1b:d2:da:64:85:ce:ae:7d:be:50:b9:9b:ce:6e:0e:98"] 
             - run:
                 name: Install Ansible
@@ -20,11 +19,8 @@ jobs:
                 command: |
                     ansible-playbook -i inventory main-remote.yml
 
-
 workflows:
-    # Name the workflow
     myWorkflow:
         jobs:
-            #- create_infrastructure
             - configure_infrastructure:
             
